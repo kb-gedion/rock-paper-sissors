@@ -21,34 +21,65 @@ function getComputerChoice() {
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toUpperCase();
     computerSelection = computerSelection.toUpperCase();
-    let message;
-    console.log("PLAYER :" + playerSelection);
-    console.log("CMPTR: " + computerSelection)
 
     if (playerSelection === computerSelection) {
-        return "It's a Tie!";
+        return "tie";
     }
 
     switch (playerSelection) {
         case "ROCK":
             if (computerSelection === "PAPER"){
-                return "You Lose! Paper beats Rock";
+                return "computer";
             } else {
-                return "You Win! Rock beats Sissors";
+                return "player";
             }
             break;
         case "PAPER":
             if (computerSelection === "SISSORS") {
-                return "You Lose! Sissor beats Paper";
+                return "computer";
             } else {
-                return "You Win! Paper beats Rock";
+                return "player";
             }
             break;
         case "SISSORS":
             if (computerSelection == "ROCK") {
-                return "You Lose! Rock beats Sissors";
+                return "computer";
             } else {
-                return "You Win! Sissors beat Paper";
+                return "player";
             }
     }
 }
+
+function playGame() {
+    let playerScore = 0;
+    let cmpScore = 0;
+    let playerSelection;
+    let computerSelection;
+    let winner;
+
+    for (let i = 0; i < 5; i++) {
+        playerSelection = prompt("Rock, Paper or Sissors?");
+        computerSelection = getComputerChoice();
+        winner = playRound(playerSelection, computerSelection);
+
+        if (winner === "tie") {
+        } else if (winner === "player") {
+            playerScore++;
+        } else if (winner === "computer") {
+            cmpScore++;
+        }
+    }
+    console.log("YOUR SCORE: " + playerScore);
+    console.log("COMPUTER: " + cmpScore);
+
+    if (playerScore > cmpScore) {
+        console.log("You Win!");
+    } else if (playerScore < cmpScore) {
+        console.log("You Lose!");
+    } else {
+        console.log("It was a tie man! One more round?");
+    }
+    
+}
+
+playGame();
