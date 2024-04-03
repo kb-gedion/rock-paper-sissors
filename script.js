@@ -68,9 +68,10 @@ function playGame() {
         } else if (winner === "computer") {
             cmpScore++;
         }
+        console.log("YOUR SCORE: " + playerScore);
+        console.log("COMPUTER: " + cmpScore);
     }
-    console.log("YOUR SCORE: " + playerScore);
-    console.log("COMPUTER: " + cmpScore);
+    
 
     if (playerScore > cmpScore) {
         console.log("You Win!");
