@@ -56,30 +56,64 @@ function playGame() {
     let playerSelection;
     let computerSelection;
     let winner;
+    const rockBtn = document.createElement("button");
+    rockBtn.textContent = "ROCK";
+    const paperBtn = document.createElement("button");
+    paperBtn.textContent = "PAPER";
+    const sissorBtn = document.createElement("button");
+    sissorBtn.textContent = "SISSORS";
+    const container = document.querySelector("div");
 
-    for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Rock, Paper or Sissors?");
+    const statsDiv = document.createElement("div");
+    const playerStats = document.createElement("p");
+    const cmpStats = document.createElement("p");
+    const gameStats = document.createElement("p");
+    playerStats.textContent = "Your Score: 0";
+    cmpStats.textContent = "Computer Score: 0";
+
+    container.appendChild(rockBtn);
+    container.appendChild(paperBtn);
+    container.appendChild(sissorBtn);
+
+    container.appendChild(statsDiv);
+    statsDiv.appendChild(playerStats);
+    statsDiv.appendChild(cmpStats);
+    statsDiv.appendChild(gameStats);
+    
+    container.addEventListener("click", function gameOn(e){
+        playerSelection = e.target.textContent;
         computerSelection = getComputerChoice();
         winner = playRound(playerSelection, computerSelection);
-
+       
         if (winner === "tie") {
+            playerStats.textContent = `Your Score: ${playerScore} | [[${playerSelection}]]`;
+            cmpStats.textContent = `Computer Score: ${cmpScore} | [[${computerSelection}]]`;
+            gameStats.textContent = "It's a tie"
         } else if (winner === "player") {
             playerScore++;
+            playerStats.textContent = `Your Score: ${playerScore} | [[${playerSelection}]]`;
+            cmpStats.textContent = `Computer Score: ${cmpScore} | [[${computerSelection}]]`;
+            gameStats.textContent = 'You win this round!';
         } else if (winner === "computer") {
             cmpScore++;
+            playerStats.textContent = `Your Score: ${playerScore} | [[${playerSelection}]]`;
+            cmpStats.textContent = `Computer Score: ${cmpScore} | [[${computerSelection}]]`;
+            gameStats.textContent = 'Computer wins this round :(';
         }
         console.log("YOUR SCORE: " + playerScore);
         console.log("COMPUTER: " + cmpScore);
-    }
     
-
-    if (playerScore > cmpScore) {
-        console.log("You Win!");
-    } else if (playerScore < cmpScore) {
-        console.log("You Lose!");
-    } else {
-        console.log("It was a tie man! One more round?");
-    }
+    
+        if (playerScore >= 5 || cmpScore >= 5) {
+            if (winner === "player") {
+                gameStats.textContent = "CONGRATS, YOU WIN THE GAME, CLAIM YOUR $20 HERE";
+            }else {
+                gameStats.textContent = "AWW, YOU LOSE THE GAME, GIVE THE COMPUTER $20";
+            }
+            container.removeEventListener("click", gameOn);
+            return winner;
+        }
+    })
     
 }
 
